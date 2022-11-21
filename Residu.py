@@ -7,44 +7,80 @@ Created on Mon Nov 21 09:28:47 2022
 
 import numpy as np
 
-def mdf_exp(c,prm,tf):
+def res(T, Ti, prm):
     """Fonction 
     
     Entrées:
-        - c : Vecteur (array) des conditions initiales à chaque noeud
-              (incluant la condition à la frontière)
+        - T : Vecteur (array) de température
+        -Ti : Vecteur des conditions initiales 
         - prm : Objet class parametres()
-            -Lx :Longueur (cm)
-            -n :Nombre de noeuds
-            - D : Coefficient de diffusion du CO dans le filtre [cm^2/s]
-            - v : Vitesse du gaz qui traverse le catalyseur [cm/s]
-            - k : Constante de réaction [L/(mol*s)]
-            - dx : Discrétisation en espace [cm]
+            -Cp :Capacité thermique (J/K)
+            -K :Conductivié thermique (W/m*K)
+            - n : Nombre de points [-]
+            - rho : Masse volumique [kg/m^3]
+            - h : Coefficient de convection [W/m^2*K]
+            - H : Hauteur de la pâte [m]
+            - dz : Discrétisation en espace [m]
             - dt : Discrétisation en temps [s]
-        - tf : temps de simulation [s]
-    
+            - ti : Temps initial [s]
+            - tf : Temps final [s]
+
     Sortie:
-        - Vecteur (array) composée de la concentration en CO selon la position [mol/L]
-            à la fin du temps de simulation
+        - Vecteur (array) contenant les valeurs numériques du résidu
     """
 
-    t=0
-    D=prm.D
-    v=prm.v
-    k=prm.k
-    dx=prm.dx
-    dt=prm.dt
-    n=prm.n
-    c_tdt=np.zeros(n)
-    c_t=np.copy(c)
-    while t<tf:
-        c_tdt[0]=np.copy(c[0])
-        for i in range(1,n-1):
-            c_tdt[i]=np.copy(c_t[i])-k*dt*np.copy(c_t[i])**2+(D*dt/(dx**2))*(np.copy(c_t[i+1])-2*np.copy(c_t[i])+np.copy(c_t[i-1]))-(v*dt/(2*dx))*(np.copy(c_t[i+1])-np.copy(c_t[i-1]))
-        c_tdt[-1]=(4/3)*np.copy(c_tdt[n-2])-(1/3)*np.copy(c_tdt[n-3])
-        t=t+dt
-        c_t=np.copy(c_tdt)
-        
-        
+    R=np.zeros(len(T))
     
-    return c_t
+    for i in range(1,len(T)-1):
+        R[i]=Ti[i]+T[i+1]*(prm.dt*prm.K/(prm.rho*prm.Cp))-T[i]*(1+2*prm.dt*prm.K/(prm.rho*prm.Cp*prm.dz**2))+T[i-1]*(prm.K*prm.dt/(prm.rho*prm.Cp*prm.dz**2))
+         
+    R[0]=Ti[i]+T[i]*(-1-3*prm.K*prm.dt/(2*prm.rho*prm.Cp*prm.dz))+T[i+1]*(4*prm.dt*prm.K/(2*prm.rho*prm.Cp*prm.dz))+T[i+2]*(-prm.K*prm.dt/(2*prm.rho*prm.Cp*prm.dz))
+    R[-1]=Ti[i]+T[i]*(-1+3*prm.K*prm.dt/(2*prm.rho*prm.Cp*prm.dz))+T[i-1]*(-2*prm.K*prm.dt/(prm.rho*prm.Cp*prm.dz))+T[i-2]*(prm.K*prm.dt/(2*prm.rho*prm.Cp*prm.dz))
+    
+    return R
+
+def newton_numerique(T,tol,prm):
+    """Fonction résolvant le système d'équations avec la méthode de Newton et un jacobien numérique
+    
+    Entrées:
+        - T : Vecteur (array) de température
+        - tol : critère d'arrêt
+        - prm : Objet class parametres()
+            -Cp :Capacité thermique (J/K)
+            -K :Conductivié thermique (W/m*K)
+            - n : Nombre de points [-]
+            - rho : Masse volumique [kg/m^3]
+            - h : Coefficient de convection [W/m^2*K]
+            - H : Hauteur de la pâte [m]
+            - dz : Discrétisation en espace [m]
+            - dt : Discrétisation en temps [s]
+            - ti : Temps initial [s]
+            - tf : Temps final [s]
+    
+    Sortie:
+        - Vecteur (array) contenant les solutions
+    """
+    
+    deltaz=np.ones(len(T))
+    Ti=np.copy(T)
+    J=np.zeros([len(T), len(T)])
+    n=0
+    t=prm.ti
+    
+    while t<prm.tf:
+        T_tdt=np.copy(T)
+        while np.linalg.norm(deltaz)>tol:
+            R=res(T, Ti, prm)
+            for i in range(len(T)):
+                pert=np.zeros(len(T))
+                pert[i]=T[i]*tol
+                zp=np.copy(T)+pert
+                zpi=np.copy(zp)
+                Rp=res(zp, prm)
+                J[:,i]=(Rp-R)/(T[i]*tol)
+            deltaT=np.linalg.solve(J, -R)  
+            T=T+np.array(deltaT)
+            n=n+1
+        t=t+prm.dt
+        
+    return 

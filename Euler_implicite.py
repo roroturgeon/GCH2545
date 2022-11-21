@@ -7,44 +7,53 @@ Created on Mon Nov 21 09:29:19 2022
 
 import numpy as np
 
-def mdf_exp(c,prm,tf):
+def Euler_imp(T, Ti, prm):
     """Fonction 
     
     Entrées:
-        - c : Vecteur (array) des conditions initiales à chaque noeud
-              (incluant la condition à la frontière)
+        - T : Vecteur (array) de température
+        -Ti : Vecteur des conditions initiales 
         - prm : Objet class parametres()
-            -Lx :Longueur (cm)
-            -n :Nombre de noeuds
-            - D : Coefficient de diffusion du CO dans le filtre [cm^2/s]
-            - v : Vitesse du gaz qui traverse le catalyseur [cm/s]
-            - k : Constante de réaction [L/(mol*s)]
-            - dx : Discrétisation en espace [cm]
+            -Cp :Capacité thermique (J/K)
+            -K :Conductivié thermique (W/m*K)
+            - n : Nombre de points [-]
+            - rho : Masse volumique [kg/m^3]
+            - h : Coefficient de convection [W/m^2*K]
+            - H : Hauteur de la pâte [m]
+            - dz : Discrétisation en espace [m]
             - dt : Discrétisation en temps [s]
-        - tf : temps de simulation [s]
-    
-    Sortie:
-        - Vecteur (array) composée de la concentration en CO selon la position [mol/L]
-            à la fin du temps de simulation
-    """
+            - ti : Temps initial [s]
+            - tf : Temps final [s]
+            -Tair : Température de l'air [C]
 
-    t=0
-    D=prm.D
-    v=prm.v
-    k=prm.k
-    dx=prm.dx
-    dt=prm.dt
-    n=prm.n
-    c_tdt=np.zeros(n)
-    c_t=np.copy(c)
-    while t<tf:
-        c_tdt[0]=np.copy(c[0])
-        for i in range(1,n-1):
-            c_tdt[i]=np.copy(c_t[i])-k*dt*np.copy(c_t[i])**2+(D*dt/(dx**2))*(np.copy(c_t[i+1])-2*np.copy(c_t[i])+np.copy(c_t[i-1]))-(v*dt/(2*dx))*(np.copy(c_t[i+1])-np.copy(c_t[i-1]))
-        c_tdt[-1]=(4/3)*np.copy(c_tdt[n-2])-(1/3)*np.copy(c_tdt[n-3])
-        t=t+dt
-        c_t=np.copy(c_tdt)
+    Sortie:
+        - Vecteur (array) contenant les valeurs numériques du résidu
+        """
         
+  A=np.zeros([prm.n, prm.n])
+  b=np.zeros(prm.n)
+  r=np.linspace(prm.Ri, prm.Re, prm.n)
+   
+   
+  "Condition Dirichlet à gauche"
+  A[0,0]=1
+  b[0]=prm.Tr
+ 
+  "Méthode arrière ordre 2 à droite"
+  A[-1,-3]=prm.K/(2*prm.h*prm.dz)
+  A[-1,-2]=-2*prm.K/(prm.h*prm.dz)
+  A[-1,-1]=1+3*prm.k/(2*prm.h*prm.dz)
+  b[-1]=prm.Tair
+   
+  for i in range(1, prm.n-1):
+      A[i,i]=-2
+      A[i,i-1]=-prm.dr/(2*r[i])+1
+      A[i,i+1]=prm.dr/(2*r[i])+1
+      b[i]=0
+  
+  T=np.linalg.solve(A,b)
+
+
+  return r, T
         
     
-    return c_t
