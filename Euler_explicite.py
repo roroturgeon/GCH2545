@@ -7,7 +7,7 @@ Created on Mon Nov 21 09:27:40 2022
 
 import numpy as np
 
-def mdf_exp(T,prm,tf):
+def mdf_exp(T,prm):
     """Fonction 
     
     Entrées:
@@ -22,15 +22,16 @@ def mdf_exp(T,prm,tf):
             - H : Hauteur de la pâte [m]
             - dz : Discrétisation en espace [m]
             - dt : Discrétisation en temps [s]
-
-        - tf : temps de simulation [s]
+            - ti : Temps initial [s]
+            - tf : Temps final [s]
     
     Sortie:
         - Vecteur (array) composée de la concentration en CO selon la position [mol/L]
             à la fin du temps de simulation
     """
 
-    t=0
+    t=prm.ti
+    tf=prm.tf
     Cp=prm.Cp
     K=prm.K
     rho=prm.rho

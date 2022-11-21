@@ -8,19 +8,27 @@ Created on Mon Nov 21 09:29:41 2022
 import numpy as np
 try:
     from CI import *
+    from Euler_explicite import *
 except:
     pass
 
+
 class parametres():
-    Cp = 0          # Longueur du catalyseur [cm]
-    K = 0           # Nombre de noeuds
-    n = 3
-    rho = 1.703*10**3   # Coefficient de diffusion du CO [cm^2/s]
-    h = 10           # Vitesse du gaz qui traverse le catalyseur [cm/s]
-    H = 0.045           # Constante de réaction [L/(mol*s)]
-    dz = H/(n-1)         # Discrétisation dans l'espace [cm]
+    Cp = 1000          # Capacité thermique massique [cm]
+    K = 0.9             # Conductivité thermique
+    n = 3               # Nombre de noeuds
+    rho = 1.703*10**3   # Masse volumique [kg/m^3]
+    h = 10           # Coefficient de convection [W/m^2*K]
+    H = 0.045           # Hauteur de la pâte [m]
+    dz = H/(n-1)         # Discrétisation dans l'espace [m]
     dt = 0.01          # Discrétisation en temps [s]
+    ti=60               # Temps initial [s]
+    tf=180               # Temps final[s]
+    Tair= 22              # Température de l'air [C]
 
 prm = parametres()
 
+
 Ti=CI(prm)
+T=mdf_exp(Ti,prm)
+
