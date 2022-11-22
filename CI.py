@@ -12,8 +12,8 @@ def CI(prm):
     
     Entrées:
         - prm : Objet class parametres()
-            -Cp :Capacité thermique (J/K)
-            -K :Conductivié thermique (W/m*K)
+            - Cp :Capacité thermique (J/K)
+            - K :Conductivié thermique (W/m*K)
             - n : Nombre de points [-]
             - rho : Masse volumique [kg/m^3]
             - h : Coefficient de convection [W/m^2*K]
