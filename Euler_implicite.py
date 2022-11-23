@@ -7,12 +7,11 @@ Created on Mon Nov 21 09:29:19 2022
 
 import numpy as np
 
-def Euler_imp(T, Ti, prm):
+def Euler_imp(Ti, prm):
     """Fonction 
     
     Entrées:
         - T : Vecteur (array) de température
-        -Ti : Vecteur des conditions initiales 
         - prm : Objet class parametres()
             -Cp :Capacité thermique (J/K)
             -K :Conductivié thermique (W/m*K)
@@ -36,7 +35,6 @@ def Euler_imp(T, Ti, prm):
 
    
     "Condition Dirichlet à gauche"
-    t=np.linspace(prm.ti, prm.tf, prm.n)
     
     A[0,0]=1
  
@@ -49,17 +47,22 @@ def Euler_imp(T, Ti, prm):
     
     "Construction matrice"
     for i in range(1, prm.n-1):
-       A[i,i]=1+2*prm.k*prm.dt/(prm.rho*prm.Cp*prm.d**2)
+       A[i,i]=1+2*prm.k*prm.dt/(prm.rho*prm.Cp*prm.dz**2)
        A[i,i-1]=-prm.k*prm.dt/(prm.rho*prm.Cp*prm.dz**2)
        A[i,i+1]=-prm.k*prm.dt/(prm.rho*prm.Cp*prm.dz**2)
 
-    t=0
+
     
     "Résolution et termes du vecteur b dépendant du temps "
+    t=prm.ti
+    Tdt=np.copy(Ti)
+    T=np.copy(Ti)
+
     while t<prm.tf:
+        "Condition frontière dépendante du temps"
+        b[0]=0.03175*t+26.02
         for i in range(1, prm.n-1):
-            b[0]=0.03175*t+26.02
-            b[i]=T[-1, i]
+            b[i]=Tdt[i]
         Tdt=np.linalg.solve(A,b)
         t=t+prm.dt
         T=np.vstack((T, Tdt))
