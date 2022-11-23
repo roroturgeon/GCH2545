@@ -15,7 +15,7 @@ except:
 
 class parametres():
     Cp = 1000          # Capacité thermique massique [cm]
-    K = 0.9             # Conductivité thermique
+    k = 0.9             # Conductivité thermique
     n = 3               # Nombre de noeuds
     rho = 1.703*10**3   # Masse volumique [kg/m^3]
     h = 10           # Coefficient de convection [W/m^2*K]
