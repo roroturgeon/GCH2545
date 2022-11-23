@@ -32,28 +32,37 @@ def Euler_imp(T, Ti, prm):
         
     A=np.zeros([prm.n, prm.n])
     b=np.zeros(prm.n)
-    r=np.linspace(prm.Ri, prm.Re, prm.n)
-   
+
    
     "Condition Dirichlet à gauche"
+    t=np.linspace(prm.ti, prm.tf, prm.n)
+    
     A[0,0]=1
-    b[0]=prm.Tr
+    b[0]=0.03175*t+26.02
  
     "Méthode arrière ordre 2 à droite"
+    
     A[-1,-3]=prm.K/(2*prm.h*prm.dz)
     A[-1,-2]=-2*prm.K/(prm.h*prm.dz)
     A[-1,-1]=1+3*prm.k/(2*prm.h*prm.dz)
     b[-1]=prm.Tair
-   
+    
+    "Construction matrice"
     for i in range(1, prm.n-1):
-        A[i,i]=-2
-        A[i,i-1]=-prm.dr/(2*r[i])+1
-        A[i,i+1]=prm.dr/(2*r[i])+1
-        b[i]=0
-  
-    T=np.linalg.solve(A,b)
+       A[i,i]=1+2*prm.K*prm.dt/(prm.rho*prm.Cp*prm.d**2)
+       A[i,i-1]=-prm.K*prm.dt/(prm.rho*prm.Cp*prm.dz**2)
+       A[i,i+1]=-prm.K*prm.dt/(prm.rho*prm.Cp*prm.dz**2)
+
+    t=0
+    
+    while t<prm.tf:
+        for i in range(1, prm.n-1):
+            b[i]=T[i]
+        Tdt=np.linalg.solve(A,b)
+        t=t+prm.dt
+        T=Tdt
 
 
-    return r, T
+    return T
         
     
