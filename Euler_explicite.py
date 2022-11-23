@@ -15,10 +15,12 @@ def mdf_exp(T,prm):
               (incluant les condition aux frontières)
         - prm : Objets de la classe parametres()
             - Cp : Capacité thermique (J/K)
-            - k : Conductivié thermique (W/m*K)
+            - K : Conductivié thermique (W/m*K)
+            - n : Nombre de points [-]
             - rho : Masse volumique [kg/m^3]
             - h : Coefficient de convection [W/m^2*K]
             - H : Hauteur de la pâte [m]
+            - dz : Discrétisation en espace [m]
             - dt : Discrétisation en temps [s]
             - ti : Temps initial [s]
             - tf : Temps final [s]
@@ -29,28 +31,31 @@ def mdf_exp(T,prm):
     """
     """Assignation des paramètres"""
     t=prm.ti
-    T_t=T[1:-1]
-    T_tdt=np.zeros(len(T_t))
-    dz=prm.H/(len(T_t)-1)
-    
+    tf=prm.tf
+    Cp=prm.Cp
+    K=prm.K
+    rho=prm.rho
+    dz=prm.dz
+    dt=prm.dt
+    n=prm.n
+    h=prm.h
+    T_tdt=np.zeros(n)
+    T_t=np.copy(T)
     
     """Boucle contenant l'équation de récurence de la méthode d'Euler explicite"""
-    while t<prm.tf:
+    while t<tf:
         
-        """Condition de Dirichlet"""
-        T_tdt[0] = T_t[0]
+        T_tdt[0]=np.copy(T[0])
         
-        """Noeuds intermédiaires"""
-        for i in range(1,len(T_t)-1):
-            T_tdt[i] = T_t[i] + ((prm.dt*prm.k)/(prm.rho*prm.Cp*dz**2))*(T_t[i+1]-2*T_t[i]+T_t[i-1])
+        for i in range(1,n-1):
+            T_tdt[i]=np.copy(T_t[i])+((dt*K)/(rho*Cp*dz**2))*(T_t[i+1]-2*T_t[i]+T_t[i-1])
         
-        """Condition de Robin"""
-        T_tdt[-1]=((-3*prm.k/(2*prm.h*dz)*T_tdt[-2])+((-prm.k/(2*prm.h*dz))*T_tdt[-3])+(T[-1]))/(1-(2*prm.k/(prm.h*dz)))
+        T_tdt[-1]=(1/(3+((2*dz*h)/K)))*(4*np.copy(T_tdt[n-2])-1*np.copy(T_tdt[n-3]))
         
-        """Incrément temporel"""
-        t=t+prm.dt
+        t=t+dt
         
-        """Vecteur au temps t+dt"""
-        T_t=T_tdt
+        T_t=np.copy(T_tdt)
         
+        
+    
     return T_t
