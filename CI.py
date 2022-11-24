@@ -30,6 +30,6 @@ def CI(prm):
     n=prm.n
     z=np.linspace(0,H,n)
     Ti=np.zeros(n)
-    Ti[:]=27.92-240.89*z[:]+2982.72*z[:]**2   
+    Ti[:]=27.92 - 240.89*z[:] + 2982.72*z[:]**2   
     
     return Ti
