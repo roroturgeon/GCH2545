@@ -5,18 +5,17 @@ Created on Wed Nov 23 20:47:33 2022
 @author: dessi
 """
 import numpy as np
-from Euler_explicite import *
-from Euler_implicite import *
+from Fonctions import *
 from CI import *
 from CFI import *
 
-"""Résolution numérique"""
+"""Résolution numérique de l'équation"""
 
 """Définition des paramètres"""
 
 class parametres():
-    Cp = 1000          # Capacité thermique massique [cm]
-    k = 1.9           # Conductivité thermique 
+    Cp = 1000          # Capacité thermique massique [J/(kg*K)]
+    k = 1.9            # Conductivité thermique 
     n = 3               # Nombre de noeuds
     rho = 1.703*10**3   # Masse volumique [kg/m^3]
     h = 10           # Coefficient de convection [W/m^2*K]
@@ -25,7 +24,7 @@ class parametres():
     ti=60               # Temps initial [s]
     tf=180               # Temps final[s]
     dt = 0.1         # Discrétisation en temps [s]
-    Tair= 32              # Température de l'air [C]
+    Tair= 22              # Température de l'air [C]
     
 """Appel des conditions initiales"""
 T_i = CI(parametres())
