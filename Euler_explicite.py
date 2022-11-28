@@ -6,9 +6,8 @@ Created on Mon Nov 21 09:27:40 2022
 """
 
 import numpy as np
-from CI import *
 
-def Euler_exp(T,prm):
+def Euler_exp(T,Tinf,prm):
     """Fonction de la méthode d'Euler explicite
     
     Entrées:
@@ -45,7 +44,6 @@ def Euler_exp(T,prm):
     T_tdt=np.zeros(n)
     T_t=np.copy(T)
     Te=np.copy(T)
-    Tinf=CFI(prm)
     j=0
     
     """Boucle contenant l'équation de récurence de la méthode d'Euler explicite"""

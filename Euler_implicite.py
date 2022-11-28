@@ -6,9 +6,8 @@ Created on Mon Nov 21 09:29:19 2022
 """
 
 import numpy as np
-from CI import *
 
-def Euler_imp(Ti, prm):
+def Euler_imp(Ti,Tinf, prm):
     """Fonction 
     
     Entrées:
@@ -33,7 +32,6 @@ def Euler_imp(Ti, prm):
     "Initialisation des matrices"
     A=np.zeros([prm.n, prm.n])
     b=np.zeros(prm.n)
-    Tinf=CFI(prm)
     j=0
 
    
