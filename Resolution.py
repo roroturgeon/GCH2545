@@ -5,7 +5,8 @@ Created on Wed Nov 23 20:47:33 2022
 @author: dessi
 """
 import numpy as np
-from Fonctions import *
+from Euler_explicite import *
+from Euler_implicite import *
 from CI import *
 
 """Résolution numérique de l'équation"""

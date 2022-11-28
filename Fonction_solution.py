@@ -8,7 +8,8 @@ Created on Wed Nov 23 23:30:37 2022
 """Fonctions-solutions utilisées pour trouver les valeurs optimales de Cp et k"""
 
 import numpy as np
-from Fonctions import *
+from Euler_explicite import *
+from Euler_implicite import *
 from CI import *
 
 """Fonction-solution dans le cas explicite"""
