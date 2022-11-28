@@ -28,38 +28,30 @@ def Euler_exp(T,prm):
     Sortie:
         - Vecteur (array) composée de la température final à chaque noeud
     """
-    """Assignation des paramètres"""
-    t=prm.ti
-    tf=prm.tf
-    Cp=prm.Cp
-    K=prm.k
-    rho=prm.rho
-    dz=prm.dz
-    dt=prm.dt
-    n=prm.n
-    h=prm.h
-    T_tdt=np.zeros(n)
-    T_t=np.copy(T)
-    Te=np.copy(T)
+    """Création des vecteurs"""
+    T_t = T
+    T_exp = T
+    T_tdt = np.zeros(prm.n)
     
     """Boucle contenant l'équation de récurence de la méthode d'Euler explicite"""
-    while t<tf:
+    t = prm.ti
+    while t < prm.tf:
         
         "Premier élément du vecteur T_tdt varie linéairement en fonction du temps "
         T_tdt[0]=0.03175*t+26.015
         
-        for i in range(1,n-1):
-            T_tdt[i]=np.copy(T_t[i])+((dt*K)/(rho*Cp*dz**2))*(T_t[i+1]-2*T_t[i]+T_t[i-1])
+        for i in range(1,prm.n-1):
+            T_tdt[i]= T_t[i] +((prm.dt*prm.k)/(prm.rho*prm.Cp*prm.dz**2))*(T_t[i+1]-2*T_t[i]+T_t[i-1])
         
-        T_tdt[-1]=(1/(3+((2*dz*h)/K)))*(4*np.copy(T_tdt[n-2])-np.copy(T_tdt[n-3])+((2*h*dz)/K)*prm.Tair)
+        T_tdt[-1]=(1/(3+((2*prm.dz*prm.h)/prm.k)))*(4*np.copy(T_tdt[prm.n-2])-np.copy(T_tdt[prm.n-3])+((2*prm.h*prm.dz)/prm.k)*prm.Tair)
         
-        t=t+dt
+        t=t+prm.dt
         
-        T_t=np.copy(T_tdt)
+        T_t= T_tdt
         
-        Te=np.vstack((Te,np.copy(T_t)))
+        T_exp=np.vstack((T_exp,T_t))
         
-    return Te
+    return T_exp
 
 
 """Méthode d'Euler implicite"""
