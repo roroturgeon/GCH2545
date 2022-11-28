@@ -7,7 +7,6 @@ Created on Wed Nov 23 20:47:33 2022
 import numpy as np
 from Fonctions import *
 from CI import *
-from CFI import *
 
 """Résolution numérique de l'équation"""
 

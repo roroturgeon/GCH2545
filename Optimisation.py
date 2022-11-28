@@ -39,7 +39,6 @@ for i in range(0,len(espace_cp)):
     prm.Cp = espace_cp[i]
     for j in range(0,len(espace_k)):
         prm.k = espace_k[j]
-        
         espace_solution_exp[i,j] = fonction_solution_exp(prm)
         espace_solution_imp[i,j] = fonction_solution_imp(prm)
         
