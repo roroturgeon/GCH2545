@@ -4,11 +4,10 @@ Created on Mon Nov 21 09:42:40 2022
 
 @author: Rosalie
 """
-
 import numpy as np
 
 def CI(prm):
-    """Fonction 
+    """Fonction qui génère les conditions initiales 
     
     Entrées:
         - prm : Objet class parametres()
@@ -35,7 +34,7 @@ def CI(prm):
     return Ti
 
 def CFI(prm):
-    """Fonction 
+    """Condition de Dirichlet pour z = 0
     
     Entrées:
         - prm : Objet class parametres()
@@ -50,7 +49,7 @@ def CFI(prm):
 
     
     Sortie:
-        - Vecteur (array) composée de la température inférieure (z= 0 m) selon le nombre de points
+        - Vecteur (array) composée de la température inférieure (z = 0 m) selon le nombre de points
     """
     dt=prm.dt
     ti=prm.ti
