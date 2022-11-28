@@ -6,6 +6,7 @@ Created on Mon Nov 21 09:29:19 2022
 """
 
 import numpy as np
+from CI import *
 
 def Euler_imp(Ti, prm):
     """Fonction 
@@ -32,6 +33,8 @@ def Euler_imp(Ti, prm):
     "Initialisation des matrices"
     A=np.zeros([prm.n, prm.n])
     b=np.zeros(prm.n)
+    Tinf=CFI(prm)
+    j=0
 
    
     "Condition Dirichlet à gauche"
@@ -60,13 +63,13 @@ def Euler_imp(Ti, prm):
 
     while t<prm.tf:
         "Condition frontière dépendante du temps"
-        b[0]=0.03175*t+26.02
+        b[0]=Tinf[j]
         for i in range(1, prm.n-1):
             b[i]=Tdt[i]
         Tdt=np.linalg.solve(A,b)
         t=t+prm.dt
         T=np.vstack((T, Tdt))
-
+        j=j+1
     return T
         
     

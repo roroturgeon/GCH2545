@@ -6,6 +6,7 @@ Created on Mon Nov 21 09:27:40 2022
 """
 
 import numpy as np
+from CI import *
 
 def Euler_exp(T,prm):
     """Fonction de la méthode d'Euler explicite
@@ -13,6 +14,8 @@ def Euler_exp(T,prm):
     Entrées:
         - T : Vecteur (array) des conditions initiales à chaque noeud
               (incluant les condition aux frontières)
+      - T : Vecteur (array) des conditions initiales à chaque noeud
+                    (incluant les condition aux frontières)
         - prm : Objets de la classe parametres()
             - Cp : Capacité thermique (J/K)
             - k : Conductivié thermique (W/m*K)
@@ -42,12 +45,15 @@ def Euler_exp(T,prm):
     T_tdt=np.zeros(n)
     T_t=np.copy(T)
     Te=np.copy(T)
+    Tinf=CFI(prm)
+    j=0
     
     """Boucle contenant l'équation de récurence de la méthode d'Euler explicite"""
     while t<tf:
         
         "Premier élément du vecteur T_tdt varie linéairement en fonction du temps "
-        T_tdt[0]=0.03175*t+26.015
+        T_tdt[0]=Tinf[j]
+
         
         for i in range(1,n-1):
             T_tdt[i]=np.copy(T_t[i])+((dt*K)/(rho*Cp*dz**2))*(T_t[i+1]-2*T_t[i]+T_t[i-1])
@@ -55,6 +61,7 @@ def Euler_exp(T,prm):
         T_tdt[-1]=(1/(3+((2*dz*h)/K)))*(4*np.copy(T_tdt[n-2])-np.copy(T_tdt[n-3])+((2*h*dz)/K)*prm.Tair)
         
         t=t+dt
+        j=j+1
         
         T_t=np.copy(T_tdt)
         
