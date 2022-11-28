@@ -22,7 +22,7 @@ class parametres():
     ti=0               # Temps initial [s]
     tf=0.1              # Temps final [s]
     dt = 0.01            # Discrétisation du temps [s]
-    Tair= 0            # Température de l'air ambient [C]
+    Tair= 0            # Température de l'air ambiant [C]
 
 prm = parametres()
 
