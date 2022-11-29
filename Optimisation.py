@@ -67,15 +67,3 @@ plt.title('Évolution de la fonction - objectif en fonction de Cp pour \n un par
 plt.xlabel('Capacité thermique massique (Cp)')
 plt.ylabel('Fonction-objectif')
 plt.legend(loc = 0)
-
- T_tdt[-1]=(((2*K/dz)*np.copy(T_tdt[n-2]))-((K/(2*dz))*np.copy(T_tdt[n-3]))+(h*prm.Tair) / (h+((3*K)/(2*dz)))
- 
- t=t+dt
- 
- j=j+1
- 
- T_t=np.copy(T_tdt)
-  
- Te=np.vstack((Te,np.copy(T_t)))
- 
- return Te

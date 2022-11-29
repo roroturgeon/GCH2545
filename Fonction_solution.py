@@ -16,9 +16,10 @@ from CI import *
 def fonction_solution_exp(prm):
     
     T_i = CI(prm)
+    T_f = CFI(prm)
     T_exp = np.array([31.73, 25.19, 23.69])
     
-    T_simu_explicite = Euler_exp(T_i,prm)[-1,:]
+    T_simu_explicite = Euler_exp(T_i,T_f,prm)[-1,:]
     
     f_obj_explicite = 0
 
@@ -32,9 +33,10 @@ def fonction_solution_exp(prm):
 def fonction_solution_imp(prm):
     
     T_i = CI(prm)
+    T_f = CFI(prm)
     T_exp = np.array([31.73, 25.19, 23.69])
     
-    T_simu_implicite = Euler_imp(T_i,prm)[-1,:]
+    T_simu_implicite = Euler_imp(T_i,T_f,prm)[-1,:]
     
     f_obj_implicite = 0
 
