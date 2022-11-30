@@ -10,19 +10,21 @@ def CI(prm):
     """Fonction qui génère les conditions initiales 
     
     Entrées:
-        - prm : Objet class parametres()
-            - Cp :Capacité thermique (J/K)
-            - K :Conductivié thermique (W/m*K)
-            - n : Nombre de points [-]
+        - prm : Objets de la classe parametres()
+            - Cp : Capacité thermique massique (J/K)
+            - k : Conductivié thermique (W/m*K)
             - rho : Masse volumique [kg/m^3]
             - h : Coefficient de convection [W/m^2*K]
             - H : Hauteur de la pâte [m]
-            - dz : Discrétisation en espace [m]
+            - dz : Discrétisation en hauteur [m]
+            - ti : Temps initial [s]
+            - tf : Temps final [s]
             - dt : Discrétisation en temps [s]
+            -Tair: Température de l'air [C]
 
     
     Sortie:
-        - Vecteur (array) composée de la température initiale (t= 1min) selon le nombre de points
+        - Vecteur (array) composée de la température initiale (t= 1 min) selon le nombre de points
     """
     dz=prm.dz
     H=prm.H
@@ -37,15 +39,17 @@ def CFI(prm):
     """Condition de Dirichlet pour z = 0
     
     Entrées:
-        - prm : Objet class parametres()
-            - Cp :Capacité thermique (J/K)
-            - K :Conductivié thermique (W/m*K)
-            - n : Nombre de points [-]
+        - prm : Objets de la classe parametres()
+            - Cp : Capacité thermique massique (J/K)
+            - k : Conductivié thermique (W/m*K)
             - rho : Masse volumique [kg/m^3]
             - h : Coefficient de convection [W/m^2*K]
             - H : Hauteur de la pâte [m]
-            - dz : Discrétisation en espace [m]
+            - dz : Discrétisation en hauteur [m]
+            - ti : Temps initial [s]
+            - tf : Temps final [s]
             - dt : Discrétisation en temps [s]
+            -Tair: Température de l'air [C]
 
     
     Sortie:

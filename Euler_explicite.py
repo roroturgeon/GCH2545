@@ -17,15 +17,15 @@ def Euler_exp(T,Tinf,prm):
       - T : Vecteur (array) des conditions initiales à chaque noeud
                     (incluant les condition aux frontières)
         - prm : Objets de la classe parametres()
-            - Cp : Capacité thermique (J/K)
+            - Cp : Capacité thermique massique (J/K)
             - k : Conductivié thermique (W/m*K)
             - rho : Masse volumique [kg/m^3]
             - h : Coefficient de convection [W/m^2*K]
             - H : Hauteur de la pâte [m]
-            - dt : Discrétisation en temps [s]
             - dz : Discrétisation en hauteur [m]
             - ti : Temps initial [s]
             - tf : Temps final [s]
+            - dt : Discrétisation en temps [s]
             -Tair: Température de l'air [C]
     
     Sortie:

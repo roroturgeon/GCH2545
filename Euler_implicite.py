@@ -13,16 +13,16 @@ def Euler_imp(Ti,Tinf, prm):
     Entrées:
         - T : Vecteur (array) de température
         - prm : Objet class parametres()
-            -Cp :Capacité thermique (J/K)
+            -Cp :Capacité thermique massique (J/K)
             -K :Conductivié thermique (W/m*K)
             - n : Nombre de points [-]
             - rho : Masse volumique [kg/m^3]
             - h : Coefficient de convection [W/m^2*K]
             - H : Hauteur de la pâte [m]
-            - dz : Discrétisation en espace [m]
             - dt : Discrétisation en temps [s]
             - ti : Temps initial [s]
             - tf : Temps final [s]
+            - dz : Discrétisation en espace [m]
             -Tair : Température de l'air [C]
 
     Sortie:
