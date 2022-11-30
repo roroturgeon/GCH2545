@@ -13,9 +13,7 @@ def Euler_exp(T,Tinf,prm):
     
     Entrées:
         - T : Vecteur (array) des conditions initiales à chaque noeud
-              (incluant les condition aux frontières)
-      - T : Vecteur (array) des conditions initiales à chaque noeud
-                    (incluant les condition aux frontières)
+        - T : Vecteur (array) des conditions frontières à chaque noeud
         - prm : Objets de la classe parametres()
             - Cp : Capacité thermique massique (J/K)
             - k : Conductivié thermique (W/m*K)

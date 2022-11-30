@@ -11,7 +11,8 @@ def Euler_imp(Ti,Tinf, prm):
     """Fonction 
     
     Entrées:
-        - T : Vecteur (array) de température
+        - T : Vecteur (array) des conditions initiales à chaque noeud
+        - T : Vecteur (array) des conditions frontières à chaque noeud
         - prm : Objet class parametres()
             -Cp :Capacité thermique massique (J/K)
             -K :Conductivié thermique (W/m*K)
