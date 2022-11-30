@@ -14,7 +14,7 @@ class parametres():
     
     Cp = 1150           # Capacité thermique massique [J/(kg*K)]
     k = 1.9             # Conductivité thermique [W/(m*K)]
-    n = 3               # Nombre de noeuds
+    n = 9               # Nombre de noeuds
     rho = 1.07*10**3   # Masse volumique [kg/(m^3)]
     h = 10              # Coefficient de convection [W/(m^2*K)]
     H = 0.045           # Hauteur de la pâte [m]
