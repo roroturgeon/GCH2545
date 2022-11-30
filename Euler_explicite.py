@@ -58,8 +58,6 @@ def Euler_exp(T,Tinf,prm):
             T_tdt[i]=np.copy(T_t[i])+((dt*K)/(rho*Cp*dz**2))*(T_t[i+1]-2*T_t[i]+T_t[i-1])
         
         T_tdt[-1]=(1/(3+((2*dz*h)/K)))*(4*np.copy(T_tdt[n-2])-np.copy(T_tdt[n-3])+((2*h*dz)/K)*prm.Tair)
-        #T_tdt[-1]=(1/(h+((3*K)/(2*dz))))*((-K/(2*dz))*(-4*T_tdt[n-2]+T_tdt[n-3])+h*prm.Tair)
-        # T_tdt[-1]=(-K/(2*dz*h+3*K))*(-4*T_tdt[n-2]+T_tdt[n-3]+2*dz*h*prm.Tair)
         
         t=t+dt
         j=j+1
