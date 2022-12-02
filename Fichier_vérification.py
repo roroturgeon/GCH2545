@@ -137,8 +137,8 @@ mdfe3 = Euler_exp(T3, Tinf3, prm3)
 
 ###Graphique pour les différents noeuds
 plt.show()
-plt.plot(pos, mdfe[-1, :], label='5') 
-plt.plot(pos2, mdfe2[-1, :], label='n=10') 
+plt.plot(pos, mdfe[-1, :],marker='D', label='5') 
+plt.plot(pos2, mdfe2[-1, :],marker='o', label='n=10') 
 plt.plot(pos3, mdfe3[-1, :], label='n=20')  
 plt.ylabel('Température [C]')
 plt.xlabel('Position [m]')
