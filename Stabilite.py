@@ -8,7 +8,8 @@ Created on Mon Nov 21 09:30:05 2022
 import numpy as np
 import matplotlib.pyplot as plt
 from CI import *
-from Fonctions import *
+from Euler_explicite import *
+from Euler_implicite import *
 
 """L'analyse de stabilité ne s'applique qu'à la méthode d'Euler explicite"""
 
