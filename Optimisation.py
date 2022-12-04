@@ -26,9 +26,8 @@ class parametres():
 prm = parametres()
 
 """Génération des espaces-solutions pour la méthode d'Euler explicite et la méthode d'Euler implicite"""
-m = 8
-espace_cp = np.linspace(1000,1200,m)
-espace_k = np.linspace(0.9,1.9,m)
+espace_cp = np.linspace(1000,1200,prm.n)
+espace_k = np.linspace(0.9,1.9,prm.n)
 
 espace_solution_exp = np.zeros([len(espace_cp),len(espace_k)])
 espace_solution_imp = np.zeros([len(espace_cp),len(espace_k)])
