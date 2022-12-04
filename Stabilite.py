@@ -11,42 +11,48 @@ from CI import *
 from Euler_explicite import *
 from Euler_implicite import *
 
-"""L'analyse de stabilité ne s'applique qu'à la méthode d'Euler explicite"""
-
 """Définition des paramètres du problème"""
 class parametres():
     
-    Cp = 1000           # Capacité thermique massique [J/(kg*K)]
-    k = 1.9             # Conductivité thermique [W/(m*K)]
-    
-    n = 3               # Nombre de noeuds
+    Cp = 1025        # Capacité thermique massique [J/(kg*K)]
+    k = 1.525             # Conductivité thermique [W/(m*K)]
+    n = 9               # Nombre de noeuds
     rho = 1.703*10**3   # Masse volumique [kg/(m^3)]
     h = 10              # Coefficient de convection [W/(m^2*K)]
     H = 0.045           # Hauteur de la pâte [m]
     dz = H/(n-1)        # Discrétisation de l'espace [m]
-    ti = 60               # Temps initial [s]
-    tf = 180              # Temps final [s]
-    dt = 0.1            # Discrétisation du temps [s]
-    Tair = 22            # Température de l'air ambient [C]
+    ti = 60             #r Temps initial [s]
+    tf = 180            # Temps final [s]
+    dt = 1            # Discrétisation du temps [s]
+    Tair = 22           # Température de l'air ambient [C]
 
 prm = parametres()
-"""Calcul du critère de stabilité"""
-critere_t = (prm.rho*prm.Cp*prm.dz**2)/prm.k
+m = 8
 
-"""Création de l'espace de valeurs de dt"""
-valeur_dt = 100
-nombre_valeur_dt = 100
-espace_critere_dt = np.linspace(critere_t - valeur_dt, critere_t + valeur_dt, nombre_valeur_dt)
+"""Méthode d'Euler explicite"""
 
 """Création de l'espace des valeurs de dz"""
-valeur_dz = 5
-nombre_valeur_dz = 10
-espace_critère_dz = np.linspace(prm.dz/valeur_dz, prm.dz*valeur_dz, nombre_valeur_dz)
+espace_dz = np.linspace(0,prm.dz,m)
 
-"""Calcul de l'évolution du profil de température pour chaque méthode"""
-T_i=CI(prm)
-critere_exp = np.zeros(nombre_valeur_dt)
-for i in range(0,nombre_valeur_dt):
-    prm.dt = espace_critere_dt[i]
-    critere_exp_1 = Euler_exp(T_i,prm)
-    critere_exp = np.vstack([critere_exp, critere_exp_1])
+"""Création de l'espace des valeurs de dt"""
+espace_dt = np.linspace(0,prm.dt,m)
+
+"""Création de l'espace des valeurs de stabilité"""
+espace_stabilite = np.zeros([len(espace_dt), len(espace_dz)])
+for i in range(0,len(espace_dt)):
+    for j in range(0,len(espace_dz)):
+        espace_stabilite[i,j] = (2*espace_dt[j]*prm.k)/(prm.rho*prm.Cp*espace_dz[i]**2)
+        
+"""Plan à z = 1"""
+plan_z_1 = np.ones([len(espace_dt),len(espace_dz)])
+"""Figure qui représente les sections stables et instables de la méthode d'Euler explicite"""
+plt.figure(3)
+ax = plt.axes(projection='3d')
+X,Y=np.meshgrid(espace_dz,espace_dt)
+ax.plot_surface(X,Y,espace_stabilite,cmap='viridis')
+ax.plot_surface(X,Y,plan_z_1)
+ax.set_title('Stabilité de la méthode d\'Euler explicite')
+ax.set_ylabel('Temps discrétisé')
+ax.set_xlabel('Espace discrétisé')
+ax.set_zlabel('Valeur de stabilité')
+

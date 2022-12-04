@@ -26,7 +26,7 @@ class parametres():
 prm = parametres()
 
 """Génération des espaces-solutions pour la méthode d'Euler explicite et la méthode d'Euler implicite"""
-m = 30
+m = 8
 espace_cp = np.linspace(1000,1200,m)
 espace_k = np.linspace(0.9,1.9,m)
 
@@ -45,11 +45,11 @@ for i in range(0,len(espace_cp)):
 plt.figure(1)
 
 ax = plt.axes(projection='3d')
-X,Y = np.meshgrid(espace_cp,espace_k)
+X,Y = np.meshgrid(espace_k,espace_cp)
 ax.plot_surface(X,Y,espace_solution_exp,cmap='viridis',edgecolor='none')
 ax.set_title('Fonction-objectif en fonction de Cp et de k \n avec la méthode d\'Euler explicite')
-ax.set_xlabel('Capacité thermique massique (Cp)')
-ax.set_ylabel('Conductivité thermique (k)')
+ax.set_ylabel('Capacité thermique massique (Cp)')
+ax.set_xlabel('Conductivité thermique (k)')
 ax.set_zlabel('Fonction-objectif')
 plt.savefig("Fonction_objectif_exp.png", dpi=300)
 
@@ -57,10 +57,10 @@ plt.savefig("Fonction_objectif_exp.png", dpi=300)
 plt.figure(2)
 
 ax = plt.axes(projection='3d')
-X,Y = np.meshgrid(espace_cp, espace_k)
+X,Y = np.meshgrid(espace_k, espace_cp)
 ax.plot_surface(X,Y,espace_solution_imp, cmap='viridis', edgecolor='none')
 ax.set_title('Fonction-objectif en fonction de Cp et de k \n avec la méthode d\'Euler implicite')
-ax.set_xlabel('Capacité thermique massique (Cp)')
-ax.set_ylabel('Conductivité thermique (k)')
+ax.set_ylabel('Capacité thermique massique (Cp)')
+ax.set_xlabel('Conductivité thermique (k)')
 ax.set_zlabel('Fonction-objectif')
 plt.savefig("Fonction_objectif_imp.png", dpi=300)
