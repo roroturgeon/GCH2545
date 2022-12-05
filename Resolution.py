@@ -17,7 +17,7 @@ from CI import *
 class parametres():
     Cp = 1025          # Capacité thermique massique [J/(kg*K)]
     k = 1.525            # Conductivité thermique 
-    n = 9          # Nombre de noeuds
+    n = 100          # Nombre de noeuds
     rho = 1.07*10**3   # Masse volumique [kg/m^3]
     h = 10           # Coefficient de convection [W/m^2*K]
     H = 0.045           # Hauteur de la pâte [m]
@@ -52,7 +52,7 @@ ax_1[0].set_title('Profil de température selon les méthodes d\'Euler \n explic
 #x_1[0].set_xlabel('Hauteur (m)')
 ax_1[0].set_ylabel('Température (C)')
 ax_1[0].plot(x[0],31.73,'rx')
-ax_1[0].plot(x[4],25.19,'rx')
+ax_1[0].plot(x[50],25.19,'rx')
 ax_1[0].plot(x[-1],23.69,'rx')
 
 ax_1[1].plot(x,T_f_imp[-1,:])
@@ -60,7 +60,7 @@ ax_1[1].plot(x,T_f_imp[-1,:])
 ax_1[1].set_xlabel('Hauteur (m)')
 ax_1[1].set_ylabel('Température (C)')
 ax_1[1].plot(x[0],31.73,'rx')
-ax_1[1].plot(x[4],25.19,'rx')
+ax_1[1].plot(x[50],25.19,'rx')
 ax_1[1].plot(x[-1],23.69,'rx')
 
 plt.savefig('profil_température.png', dpi=300)
