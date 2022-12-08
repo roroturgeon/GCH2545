@@ -14,8 +14,8 @@ from Euler_implicite import *
 """Définition des paramètres du problème"""
 class parametres():
     
-    Cp = 1025        # Capacité thermique massique [J/(kg*K)]
-    k = 1.525             # Conductivité thermique [W/(m*K)]
+    Cp = 1000        # Capacité thermique massique [J/(kg*K)]
+    k = 1.9             # Conductivité thermique [W/(m*K)]
     n = 11               # Nombre de noeuds
     rho = 1.07*10**3   # Masse volumique [kg/(m^3)]
     h = 10              # Coefficient de convection [W/(m^2*K)]
@@ -23,7 +23,7 @@ class parametres():
     dz = H/(n-1)        # Discrétisation de l'espace [m]
     ti = 60             #r Temps initial [s]
     tf = 180            # Temps final [s]
-    dt = 1            # Discrétisation du temps [s]
+    dt = 0.25            # Discrétisation du temps [s]
     Tair = 22           # Température de l'air ambient [C]
 
 prm = parametres()
@@ -31,10 +31,10 @@ prm = parametres()
 """Méthode d'Euler explicite"""
 
 """Création de l'espace des valeurs de dz"""
-espace_dz = np.linspace(0,prm.H,prm.n)
+espace_dz = np.linspace(0,prm.dz,prm.n)
 
 """Création de l'espace des valeurs de dt"""
-espace_dt = np.linspace(0,prm.ti,prm.n)
+espace_dt = np.linspace(0,prm.dt,prm.n)
 
 """Création de l'espace des valeurs de stabilité"""
 espace_stabilite = np.zeros([len(espace_dt), len(espace_dz)])
@@ -54,4 +54,6 @@ ax.set_title('Stabilité de la méthode d\'Euler explicite')
 ax.set_ylabel('Temps discrétisé')
 ax.set_xlabel('Espace discrétisé')
 ax.set_zlabel('Valeur de stabilité')
+
+plt.savefig('Stabilité_Euler_exp.png', dpi = 300)
 

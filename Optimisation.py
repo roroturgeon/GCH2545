@@ -13,7 +13,7 @@ class parametres():
     
     Cp = 1000           # Capacité thermique massique [J/(kg*K)]
     k = 0.9             # Conductivité thermique [W/(m*K)]   
-    n = 30               # Nombre de noeuds
+    n = 11               # Nombre de noeuds
     rho = 1.07*10**3   # Masse volumique [kg/(m^3)]
     h = 10              # Coefficient de convection [W/(m^2*K)]
     H = 0.045           # Hauteur de la pâte [m]
@@ -22,12 +22,12 @@ class parametres():
     tf=180              # Temps final [s]
     dt = 0.1            # Discrétisation du temps [s]
     Tair= 22            # Température de l'air ambient [C]
+    N = 30              # Nombre de valeurs dans les domaines de Cp et de k
 
 prm = parametres()
-
 """Génération des espaces-solutions pour la méthode d'Euler explicite et la méthode d'Euler implicite"""
-espace_cp = np.linspace(1000,1200,prm.n)
-espace_k = np.linspace(0.9,1.9,prm.n)
+espace_cp = np.linspace(1000,1200,prm.N)
+espace_k = np.linspace(0.9,1.9,prm.N)
 
 espace_solution_exp = np.zeros([len(espace_cp),len(espace_k)])
 espace_solution_imp = np.zeros([len(espace_cp),len(espace_k)])
