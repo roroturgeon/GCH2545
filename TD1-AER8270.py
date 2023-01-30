@@ -65,7 +65,7 @@ somme=0
 for i in range(prm.n):
     for j in range(prm.n):
         if i==j:
-            somme=somme
+            somme=somme                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         else:
             A=-(x[i,0]-X[j,0])*np.cos(phi[j])-(x[i,1]-X[j,1])*np.sin(phi[j])
             B=(x[i,0]-X[j,0])**2+(x[i,1]-X[j,1])**2
@@ -79,13 +79,24 @@ for i in range(prm.n):
 
 Cp=1-V**2
 t1=np.linspace(0,2*np.pi,prm.n)
-plt.plot(t1,Cp)
+
+#Cp théorique
+Cp_th=1-4*np.sin(beta)**2
+
+plt.plot(t1,Cp_th, label='Théorique')
+plt.plot(t1,Cp, label='analytique')
 plt.scatter(t1,Cp)
-
-
-
+plt.legend()
+plt.show()
     
-    
+#Calcul     
+ 
+force=Cp*Sj
 
-
+P=0
+T=0        
+                              
+for i in range(prm.n):
+    P=P+force[i]*np.sin(beta[i])
+    T=T+force[i]*np.cos(beta[i])
 
